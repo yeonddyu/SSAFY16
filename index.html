@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" class="scroll-smooth">
+<html lang="ko" class="scroll-smooth dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,13 +8,14 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,500;0,700;0,900;1,300&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS CDN -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght=0,300;0,500;0,700;0,900;1,300&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN with Dark Mode Config -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -24,6 +25,7 @@
                     colors: {
                         slateGray: '#0f172a',
                         softGray: '#f8fafc',
+                        paperBeige: '#fcfaf7',
                         groovePurple: {
                             DEFAULT: '#6366f1',
                             dark: '#4f46e5',
@@ -47,16 +49,21 @@
     <style>
         body {
             font-family: 'Pretendard', sans-serif;
-            background-color: #0b0f19;
-            color: #f1f5f9;
             overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
+        /* Rich gradient settings adapted for light and dark modes */
         .text-gradient-purple {
+            background: linear-gradient(135deg, #4f46e5, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .dark .text-gradient-purple {
             background: linear-gradient(135deg, #a5b4fc, #6366f1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        /* Custom animations */
+        /* Rotation Animation for Music Vinyl Disc */
         @keyframes spin-slow {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -70,11 +77,10 @@
         .music-paused .spinning-disc {
             animation-play-state: paused;
         }
-        /* Custom smooth transition for tab content */
+        /* Transition settings for immersive experience */
         .tab-content {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        /* Hide scrollbars but keep functionality */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -84,114 +90,118 @@
         }
     </style>
 </head>
-<body class="selection:bg-indigo-500 selection:text-white">
+<body class="bg-paperBeige text-slate-800 dark:bg-[#0b0f19] dark:text-slate-100 selection:bg-indigo-500 selection:text-white">
 
-    <!-- Header Navigation -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-[#0b0f19]/85 backdrop-blur-md border-b border-slate-800 transition-all duration-300">
+    <header class="fixed top-0 left-0 w-full z-50 bg-paperBeige/90 dark:bg-[#0b0f19]/85 backdrop-blur-md border-b border-amber-100 dark:border-slate-800/80 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#" class="font-montserrat font-black text-2xl tracking-wider text-white">
-                I AM<span class="text-indigo-500">.</span>
+            <a href="#" class="font-montserrat font-black text-2xl tracking-wider text-slate-900 dark:text-white">
+                I AM<span class="text-indigo-600 dark:text-indigo-500">.</span>
             </a>
-            <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-400">
-                <a href="#hero" class="hover:text-white transition-colors">Intro</a>
-                <a href="#identity" class="hover:text-white transition-colors">Identity</a>
-                <a href="#strengths" class="hover:text-white transition-colors">Strengths</a>
-                <a href="#multiverse" class="hover:text-white transition-colors">Multiverse</a>
-                <a href="#outro" class="hover:text-white transition-colors">Contact</a>
+            <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-600 dark:text-slate-400">
+                <a href="#hero" class="hover:text-slate-900 dark:hover:text-white transition-colors">Intro</a>
+                <a href="#identity" class="hover:text-slate-900 dark:hover:text-white transition-colors">Identity</a>
+                <a href="#strengths" class="hover:text-slate-900 dark:hover:text-white transition-colors">Strengths</a>
+                <a href="#multiverse" class="hover:text-slate-900 dark:hover:text-white transition-colors">Multiverse</a>
+                <a href="#outro" class="hover:text-slate-900 dark:hover:text-white transition-colors">Contact</a>
             </nav>
-            <a href="#multiverse" class="px-5 py-2.5 rounded-full bg-slate-800 text-white hover:bg-slate-700 transition-all text-xs font-semibold uppercase tracking-wider border border-slate-700">
-                Explore Universe
-            </a>
+            <div class="flex items-center gap-4">
+                <!-- Theme Mode Toggle Button -->
+                <button onclick="toggleTheme()" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all text-slate-800 dark:text-slate-200" aria-label="Toggle Theme">
+                    <i id="theme-toggle-icon" data-lucide="sun" class="w-4 h-4"></i>
+                </button>
+                <a href="#multiverse" class="px-5 py-2.5 rounded-full bg-slate-900 text-white dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 transition-all text-xs font-semibold uppercase tracking-wider border border-slate-200 dark:border-slate-700">
+                    Explore Universe
+                </a>
+            </div>
         </div>
     </header>
 
-    <!-- Hero / Intro Section -->
     <section id="hero" class="relative min-h-screen flex items-center justify-center pt-24 overflow-hidden">
-        <!-- Ambient Background Lights -->
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-900/20 rounded-full blur-[120px]"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-950/20 rounded-full blur-[120px]"></div>
+        <!-- Ambient Light Accents for Light and Dark modes -->
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-300/30 dark:bg-purple-900/20 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-200/20 dark:bg-emerald-950/20 rounded-full blur-[120px]"></div>
         
         <div class="max-w-5xl mx-auto px-6 text-center z-10 relative">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-800/80 border border-slate-700 text-slate-300 text-xs font-semibold mb-8 tracking-widest uppercase">
-                <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-semibold mb-8 tracking-widest uppercase shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-indigo-600 dark:bg-indigo-500 animate-pulse"></span>
                 My Personal Universe
             </div>
             
-            <h1 class="font-montserrat font-black text-4xl sm:text-6xl md:text-8xl tracking-tight leading-none mb-8">
+            <h1 class="font-montserrat font-black text-4xl sm:text-6xl md:text-8xl tracking-tight leading-none mb-8 text-slate-900 dark:text-white">
                 GREEN, COZY,<br>
                 <span class="text-gradient-purple">AND GROOVE</span>
             </h1>
             
-            <p class="text-slate-400 text-lg sm:text-2xl font-light max-w-3xl mx-auto mb-12 leading-relaxed">
+            <p class="text-slate-600 dark:text-slate-400 text-lg sm:text-2xl font-light max-w-3xl mx-auto mb-12 leading-relaxed">
                 세 가지 주파수로 맞춰진 나의 멀티버스.<br class="hidden sm:inline">
                 정교함과 리듬감, 몰입의 가치가 결합된 주체적인 삶의 기록입니다.
             </p>
 
             <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                <a href="#identity" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold shadow-lg shadow-indigo-600/30 transition-all transform hover:-translate-y-0.5">
+                <a href="#identity" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold shadow-lg shadow-indigo-600/30 transition-all transform hover:-translate-y-0.5 text-center">
                     자세히 보기
                 </a>
-                <a href="#multiverse" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white font-semibold transition-all">
+                <a href="#multiverse" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-white dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-semibold transition-all shadow-sm text-center">
                     멀티버스 스위치 돌리기
                 </a>
             </div>
         </div>
 
-        <!-- Decorative Interactive Mouse Wave Element -->
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-500 animate-bounce">
-            <span class="text-xs uppercase tracking-widest">Scroll Down</span>
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 dark:text-slate-500 animate-bounce">
+            <span class="text-xs uppercase tracking-widest font-semibold">Scroll Down</span>
             <i data-lucide="chevron-down" class="w-4 h-4"></i>
         </div>
     </section>
 
-    <!-- Identity / About Me Section -->
-    <section id="identity" class="py-32 relative bg-[#090d16]">
+    <section id="identity" class="py-32 relative bg-[#f5f2eb] dark:bg-[#090d16] border-y border-slate-100 dark:border-slate-900">
         <div class="max-w-6xl mx-auto px-6">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
                 
                 <div class="lg:col-span-5 space-y-6">
-                    <div class="text-sm font-semibold tracking-widest uppercase text-indigo-400">01 . IDENTITY</div>
-                    <h2 class="text-3xl sm:text-4xl font-bold font-montserrat tracking-tight leading-tight">
+                    <div class="text-sm font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">01 . IDENTITY</div>
+                    <h2 class="text-3xl sm:text-4xl font-bold font-montserrat tracking-tight leading-tight text-slate-900 dark:text-white">
                         음악처럼 유연하게,<br>
                         뜨개질처럼 촘촘하게,<br>
                         골프처럼 정확하게.
                     </h2>
-                    <p class="text-slate-400 leading-relaxed text-base sm:text-lg">
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-base sm:text-lg">
                         저는 극단적으로 정적인 몰입(뜨개질)과 역동적인 타겟팅(골프), 그리고 감성적인 깊이(음악)를 넘나들며 살아갑니다. 
                     </p>
-                    <p class="text-slate-400 leading-relaxed text-base sm:text-lg">
+                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-base sm:text-lg">
                         이 이색적인 조화는 일에서도 마찬가지입니다. 감각적인 아이디어로 프로젝트의 흐름(Groove)을 주도하고, 보이지 않는 곳의 디테일까지 한 코 한 코 단단하게 짜 맞추며(Cozy), 명확한 결과를 향해 정확히 타격합니다(Green).
                     </p>
                 </div>
 
                 <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-6">
-                    <!-- Identity Detail Cards -->
-                    <div class="p-6 rounded-2xl bg-slate-800/40 border border-slate-700/50 hover:border-indigo-500/50 transition-all group">
-                        <div class="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
+                    <!-- Dynamic Identity Card: Groove -->
+                    <div class="p-6 rounded-2xl bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 hover:border-indigo-500/50 dark:hover:border-indigo-500/50 transition-all group shadow-sm hover:shadow-md">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-100 dark:bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400 mb-6 group-hover:scale-110 transition-transform">
                             <i data-lucide="music" class="w-6 h-6"></i>
                         </div>
-                        <h3 class="text-lg font-bold mb-3">그루브 (Groove)</h3>
-                        <p class="text-xs text-slate-400 leading-relaxed">
+                        <h3 class="text-lg font-bold mb-3 text-slate-900 dark:text-white">그루브 (Groove)</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                             변화무쌍한 흐름 속에 유연하게 대처하고, 고유의 리듬과 템포로 몰입을 디자인합니다.
                         </p>
                     </div>
 
-                    <div class="p-6 rounded-2xl bg-slate-800/40 border border-slate-700/50 hover:border-amber-500/50 transition-all group">
-                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 mb-6 group-hover:scale-110 transition-transform">
+                    <!-- Dynamic Identity Card: Cozy -->
+                    <div class="p-6 rounded-2xl bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 hover:border-amber-500/50 dark:hover:border-amber-500/50 transition-all group shadow-sm hover:shadow-md">
+                        <div class="w-12 h-12 rounded-xl bg-amber-100 dark:bg-amber-500/10 flex items-center justify-center text-amber-600 dark:text-amber-400 mb-6 group-hover:scale-110 transition-transform">
                             <i data-lucide="scissors" class="w-6 h-6"></i>
                         </div>
-                        <h3 class="text-lg font-bold mb-3">코지 (Cozy)</h3>
-                        <p class="text-xs text-slate-400 leading-relaxed">
+                        <h3 class="text-lg font-bold mb-3 text-slate-900 dark:text-white">코지 (Cozy)</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                             인내를 가지고 섬세하게 기초를 닦으며, 보이지 않는 곳의 끈기를 결과로 증명합니다.
                         </p>
                     </div>
 
-                    <div class="p-6 rounded-2xl bg-slate-800/40 border border-slate-700/50 hover:border-emerald-500/50 transition-all group">
-                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
+                    <!-- Dynamic Identity Card: Green -->
+                    <div class="p-6 rounded-2xl bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/50 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all group shadow-sm hover:shadow-md">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-500/10 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6 group-hover:scale-110 transition-transform">
                             <i data-lucide="target" class="w-6 h-6"></i>
                         </div>
-                        <h3 class="text-lg font-bold mb-3">그린 (Green)</h3>
-                        <p class="text-xs text-slate-400 leading-relaxed">
+                        <h3 class="text-lg font-bold mb-3 text-slate-900 dark:text-white">그린 (Green)</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                             목표를 향한 집요한 조준력을 갖추어, 깔끔하고 정교한 마무리 능력을 발휘합니다.
                         </p>
                     </div>
@@ -201,42 +211,41 @@
         </div>
     </section>
 
-    <!-- Strengths Section (Key selling points) -->
-    <section id="strengths" class="py-32 bg-slate-950/40 relative">
+    <section id="strengths" class="py-32 bg-paperBeige dark:bg-slate-950/40 relative">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center max-w-2xl mx-auto mb-20">
-                <span class="text-sm font-semibold tracking-widest uppercase text-indigo-400">02 . VALUE & STRENGTHS</span>
-                <h2 class="text-3xl sm:text-4xl font-bold mt-4 font-montserrat tracking-tight">이종(異種)의 취미에서 발견한 나의 역량</h2>
-                <p class="text-slate-400 mt-4">단순한 흥미거리를 넘어, 저의 모든 취미들은 곧 저의 비즈니스 강점과 맞닿아 있습니다.</p>
+                <span class="text-sm font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">02 . VALUE & STRENGTHS</span>
+                <h2 class="text-3xl sm:text-4xl font-bold mt-4 font-montserrat tracking-tight text-slate-900 dark:text-white">이종(異種)의 취미에서 발견한 나의 역량</h2>
+                <p class="text-slate-600 dark:text-slate-400 mt-4">단순한 흥미거리를 넘어, 저의 모든 취미들은 곧 저의 비즈니스 강점과 맞닿아 있습니다.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Strength 1 -->
-                <div class="bg-[#0f172a]/60 border border-slate-800 p-8 rounded-3xl relative overflow-hidden group">
+                <!-- Strength Card 1 -->
+                <div class="bg-white dark:bg-[#0f172a]/60 border border-slate-200 dark:border-slate-800 p-8 rounded-3xl relative overflow-hidden group shadow-sm hover:shadow-md transition-all">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl"></div>
-                    <span class="text-sm font-bold text-indigo-500/60 font-montserrat">01</span>
-                    <h3 class="text-xl font-bold mt-4 mb-3">반전이 있는 입체성</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
+                    <span class="text-sm font-bold text-indigo-600 dark:text-indigo-500/60 font-montserrat">01</span>
+                    <h3 class="text-xl font-bold mt-4 mb-3 text-slate-900 dark:text-white">반전이 있는 입체성</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
                         뜨개질의 정적이고 세밀한 성향과 골프의 동적이고 시원한 공간 지각력을 동시에 소유하고 있습니다. 정반대의 뇌 영역을 마음대로 오고 가듯이, 아이디어를 낼 때는 누구보다 크리에이티브하게, 문제를 해결할 때는 날카롭고 이성적인 면모를 발휘합니다.
                     </p>
                 </div>
 
-                <!-- Strength 2 -->
-                <div class="bg-[#0f172a]/60 border border-slate-800 p-8 rounded-3xl relative overflow-hidden group">
+                <!-- Strength Card 2 -->
+                <div class="bg-white dark:bg-[#0f172a]/60 border border-slate-200 dark:border-slate-800 p-8 rounded-3xl relative overflow-hidden group shadow-sm hover:shadow-md transition-all">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl"></div>
-                    <span class="text-sm font-bold text-amber-500/60 font-montserrat">02</span>
-                    <h3 class="text-xl font-bold mt-4 mb-3">나만의 리듬과 몰입</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
+                    <span class="text-sm font-bold text-amber-600 dark:text-amber-500/60 font-montserrat">02</span>
+                    <h3 class="text-xl font-bold mt-4 mb-3 text-slate-900 dark:text-white">나만의 리듬과 몰입</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
                         플레이리스트를 정교하게 큐레이팅하듯이 시간과 집중력을 완벽하게 관리합니다. 무작정 달리는 대신 현재의 템포를 정확히 조율하고 한 번 시작한 영역에 완벽하게 딥다이브(Deep Dive)하여, 고효율의 집중 아웃풋을 얻어내는 능력이 탁월합니다.
                     </p>
                 </div>
 
-                <!-- Strength 3 -->
-                <div class="bg-[#0f172a]/60 border border-slate-800 p-8 rounded-3xl relative overflow-hidden group">
+                <!-- Strength Card 3 -->
+                <div class="bg-white dark:bg-[#0f172a]/60 border border-slate-200 dark:border-slate-800 p-8 rounded-3xl relative overflow-hidden group shadow-sm hover:shadow-md transition-all">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl"></div>
-                    <span class="text-sm font-bold text-emerald-500/60 font-montserrat">03</span>
-                    <h3 class="text-xl font-bold mt-4 mb-3">디테일과 끈기의 완결</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
+                    <span class="text-sm font-bold text-emerald-600 dark:text-emerald-500/60 font-montserrat">03</span>
+                    <h3 class="text-xl font-bold mt-4 mb-3 text-slate-900 dark:text-white">디테일과 끈기의 완결</h3>
+                    <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
                         실 한 가닥의 꼬임과 그린 위 1mm 경사마저 포착하듯이, 사소하고 미세한 버그나 품질의 불완전함을 그냥 넘어가지 않습니다. 집요한 마감 정신과 완성도에 대한 집착을 바탕으로, 동료들이 믿고 신뢰할 수 있는 철저한 품질의 산출물을 내놓습니다.
                     </p>
                 </div>
@@ -244,34 +253,32 @@
         </div>
     </section>
 
-    <!-- Multiverse Content Section (Interactive Switcher) -->
-    <section id="multiverse" class="py-32 bg-[#0c1220] border-t border-b border-slate-900 transition-colors duration-700 relative">
+    <section id="multiverse" class="py-32 bg-[#f0ede4] dark:bg-[#0c1220] border-t border-b border-slate-200 dark:border-slate-900 transition-colors duration-700 relative">
         
-        <!-- Interactive Background Highlight that changes based on active tab -->
+        <!-- Interactive Background Highlight adapts dynamically to active universes -->
         <div id="dynamic-ambient-bg" class="absolute inset-0 pointer-events-none transition-all duration-700 opacity-20">
-            <!-- Dynamically injected light blobs -->
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-500/30 rounded-full blur-[150px] transition-all duration-700" id="ambient-sphere"></div>
         </div>
 
         <div class="max-w-6xl mx-auto px-6 relative z-10">
             <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-sm font-semibold tracking-widest uppercase text-indigo-400">03 . INTERACTIVE PLAYGROUND</span>
-                <h2 class="text-3xl sm:text-4xl font-bold mt-4 font-montserrat tracking-tight">주파수를 전환해 보세요</h2>
-                <p class="text-slate-400 mt-4 text-sm sm:text-base">원하는 버튼을 클릭해 저를 둘러싼 세 가지 서로 다른 우주의 분위기와 정체성을 관람하실 수 있습니다.</p>
+                <span class="text-sm font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">03 . INTERACTIVE PLAYGROUND</span>
+                <h2 class="text-3xl sm:text-4xl font-bold mt-4 font-montserrat tracking-tight text-slate-900 dark:text-white">주파수를 전환해 보세요</h2>
+                <p class="text-slate-600 dark:text-slate-400 mt-4 text-sm sm:text-base">원하는 버튼을 클릭해 저를 둘러싼 세 가지 서로 다른 우주의 분위기와 정체성을 관람하실 수 있습니다.</p>
             </div>
 
-            <!-- Interactive Tab Switcher Menu -->
+            <!-- Tab Buttons Container -->
             <div class="flex justify-center mb-16">
-                <div class="bg-slate-900/80 p-2 rounded-2xl border border-slate-800 flex flex-wrap sm:flex-nowrap gap-1">
+                <div class="bg-white dark:bg-slate-900/80 p-2 rounded-2xl border border-slate-200 dark:border-slate-800/80 flex flex-wrap sm:flex-nowrap gap-1 shadow-md">
                     <button onclick="switchUniverse('music')" id="btn-music" class="universe-tab-btn flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-bold tracking-wide transition-all duration-300 bg-indigo-600 text-white shadow-lg shadow-indigo-600/20">
                         <i data-lucide="music" class="w-4 h-4"></i>
                         <span>🎧 Groove (Music)</span>
                     </button>
-                    <button onclick="switchUniverse('knitting')" id="btn-knitting" class="universe-tab-btn flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-bold tracking-wide transition-all duration-300 text-slate-400 hover:text-white">
+                    <button onclick="switchUniverse('knitting')" id="btn-knitting" class="universe-tab-btn flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-bold tracking-wide transition-all duration-300 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
                         <i data-lucide="scissors" class="w-4 h-4"></i>
                         <span>🧶 Cozy (Knitting)</span>
                     </button>
-                    <button onclick="switchUniverse('golf')" id="btn-golf" class="universe-tab-btn flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-bold tracking-wide transition-all duration-300 text-slate-400 hover:text-white">
+                    <button onclick="switchUniverse('golf')" id="btn-golf" class="universe-tab-btn flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-bold tracking-wide transition-all duration-300 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
                         <i data-lucide="target" class="w-4 h-4"></i>
                         <span>⛳ Green (Golf)</span>
                     </button>
@@ -279,39 +286,39 @@
             </div>
 
             <!-- Multiverse Dynamic Canvas Card Area -->
-            <div id="universe-canvas" class="bg-slate-950/70 border border-slate-800 rounded-3xl p-8 sm:p-12 transition-all duration-500 shadow-2xl relative min-h-[500px] flex items-center">
+            <div id="universe-canvas" class="bg-white dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800/80 rounded-3xl p-8 sm:p-12 transition-all duration-500 shadow-2xl relative min-h-[500px] flex items-center">
                 
                 <!-- 1. MUSIC (GROOVE) UNIVERSE CONTAINER -->
                 <div id="content-music" class="tab-content w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                     <div class="lg:col-span-5 space-y-6">
-                        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-xs font-semibold">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-100 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-500/20 text-xs font-semibold">
                             ACTIVE: TUNING FREQUENCY
                         </div>
-                        <h3 class="text-3xl font-bold font-montserrat tracking-tight text-white">나의 하루를 구동하는 음악의 비트</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed">
+                        <h3 class="text-3xl font-bold font-montserrat tracking-tight text-slate-900 dark:text-white">나의 하루를 구동하는 음악의 비트</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
                             소리를 수집하고 흐름을 세팅하는 것은 감각을 신선하게 유지하는 최선의 방법입니다. 플레이리스트는 제게 단순한 배경음악이 아닌, 고유한 몰입 사이클을 유도하는 훌륭한 생산성 트리거입니다.
                         </p>
                         
-                        <!-- Mini dynamic interactive quote player -->
-                        <div class="bg-indigo-950/20 border border-indigo-900/30 rounded-2xl p-5 space-y-4">
+                        <!-- Dynamic Quote Media Widget -->
+                        <div class="bg-slate-50 dark:bg-indigo-950/20 border border-slate-200 dark:border-indigo-900/30 rounded-2xl p-5 space-y-4 shadow-sm">
                             <div class="flex items-center gap-4">
-                                <div class="relative w-12 h-12 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center overflow-hidden active-disc-container music-active">
+                                <div class="relative w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 flex items-center justify-center overflow-hidden active-disc-container music-active">
                                     <div class="w-full h-full bg-gradient-to-r from-indigo-500 to-indigo-950 rounded-full animate-spin-slow spinning-disc"></div>
-                                    <div class="absolute inset-4 bg-slate-950 rounded-full border border-slate-800 flex items-center justify-center">
-                                        <div class="w-2 h-2 bg-indigo-400 rounded-full"></div>
+                                    <div class="absolute inset-4 bg-white dark:bg-slate-950 rounded-full border border-slate-200 dark:border-slate-800 flex items-center justify-center">
+                                        <div class="w-2 h-2 bg-indigo-500 dark:bg-indigo-400 rounded-full"></div>
                                     </div>
                                 </div>
                                 <div>
-                                    <div class="text-xs text-indigo-400 font-semibold uppercase tracking-wider">Now Playing</div>
-                                    <div class="text-sm font-bold text-white tracking-tight" id="playing-title">Midnight Coding Vibe</div>
-                                    <div class="text-xs text-slate-400" id="playing-artist">The Developer feat. AI</div>
+                                    <div class="text-xs text-indigo-600 dark:text-indigo-400 font-semibold uppercase tracking-wider">Now Playing</div>
+                                    <div class="text-sm font-bold text-slate-800 dark:text-white tracking-tight" id="playing-title">Midnight Coding Vibe</div>
+                                    <div class="text-xs text-slate-500 dark:text-slate-400" id="playing-artist">The Developer feat. AI</div>
                                 </div>
                             </div>
                             <div class="flex items-center gap-3">
-                                <button onclick="toggleMusicWidget()" id="widget-play-btn" class="w-8 h-8 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white flex items-center justify-center transition-all">
+                                <button onclick="toggleMusicWidget()" id="widget-play-btn" class="w-8 h-8 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white flex items-center justify-center transition-all shadow-md">
                                     <i data-lucide="pause" class="w-4 h-4" id="play-icon"></i>
                                 </button>
-                                <div class="flex-1 bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                <div class="flex-1 bg-slate-200 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
                                     <div class="bg-indigo-500 h-full w-2/3 transition-all" id="song-progress"></div>
                                 </div>
                                 <span class="text-[10px] text-slate-500 font-mono">02:14 / 03:40</span>
@@ -322,157 +329,156 @@
                     <div class="lg:col-span-7 space-y-4">
                         <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-2">My Favorite Playlist Tracks</div>
                         
-                        <!-- Song Card 1 -->
-                        <div class="flex items-center justify-between p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/30 transition-all cursor-pointer group" onclick="playSong('Midnight Coding Vibe', 'The Developer feat. AI', '65%', '02:14 / 03:40')">
+                        <!-- Song 1 -->
+                        <div class="flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/30 transition-all cursor-pointer group shadow-sm" onclick="playSong('Midnight Coding Vibe', 'The Developer feat. AI', '65%', '02:14 / 03:40')">
                             <div class="flex items-center gap-4">
-                                <span class="text-xs text-slate-500 font-mono group-hover:text-indigo-400">01</span>
+                                <span class="text-xs text-slate-400 dark:text-slate-500 font-mono group-hover:text-indigo-500">01</span>
                                 <div>
-                                    <h4 class="text-sm font-bold text-slate-200 group-hover:text-white">Midnight Coding Vibe</h4>
-                                    <p class="text-xs text-slate-400">Lo-Fi / Focus & Chill</p>
+                                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-white">Midnight Coding Vibe</h4>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">Lo-Fi / Focus & Chill</p>
                                 </div>
                             </div>
-                            <i data-lucide="play" class="w-4 h-4 text-slate-600 group-hover:text-indigo-400 transition-colors"></i>
+                            <i data-lucide="play" class="w-4 h-4 text-slate-400 dark:text-slate-600 group-hover:text-indigo-500 transition-colors"></i>
                         </div>
 
-                        <!-- Song Card 2 -->
-                        <div class="flex items-center justify-between p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/30 transition-all cursor-pointer group" onclick="playSong('Unstoppable Drive', 'Groove Horizon', '32%', '01:05 / 03:22')">
+                        <!-- Song 2 -->
+                        <div class="flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/30 transition-all cursor-pointer group shadow-sm" onclick="playSong('Unstoppable Drive', 'Groove Horizon', '32%', '01:05 / 03:22')">
                             <div class="flex items-center gap-4">
-                                <span class="text-xs text-slate-500 font-mono group-hover:text-indigo-400">02</span>
+                                <span class="text-xs text-slate-400 dark:text-slate-500 font-mono group-hover:text-indigo-500">02</span>
                                 <div>
-                                    <h4 class="text-sm font-bold text-slate-200 group-hover:text-white">Unstoppable Drive</h4>
-                                    <p class="text-xs text-slate-400">French House / High Energy</p>
+                                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-white">Unstoppable Drive</h4>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">French House / High Energy</p>
                                 </div>
                             </div>
-                            <i data-lucide="play" class="w-4 h-4 text-slate-600 group-hover:text-indigo-400 transition-colors"></i>
+                            <i data-lucide="play" class="w-4 h-4 text-slate-400 dark:text-slate-600 group-hover:text-indigo-500 transition-colors"></i>
                         </div>
 
-                        <!-- Song Card 3 -->
-                        <div class="flex items-center justify-between p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/30 transition-all cursor-pointer group" onclick="playSong('Sip & Knit', 'Acoustic Cozy Mood', '88%', '03:10 / 03:50')">
+                        <!-- Song 3 -->
+                        <div class="flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 hover:border-indigo-500/30 transition-all cursor-pointer group shadow-sm" onclick="playSong('Sip & Knit', 'Acoustic Cozy Mood', '88%', '03:10 / 03:50')">
                             <div class="flex items-center gap-4">
-                                <span class="text-xs text-slate-500 font-mono group-hover:text-indigo-400">03</span>
+                                <span class="text-xs text-slate-400 dark:text-slate-500 font-mono group-hover:text-indigo-500">03</span>
                                 <div>
-                                    <h4 class="text-sm font-bold text-slate-200 group-hover:text-white">Sip & Knit</h4>
-                                    <p class="text-xs text-slate-400">Acoustic Folk / Warm, Calm</p>
+                                    <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200 group-hover:text-indigo-600 dark:group-hover:text-white">Sip & Knit</h4>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">Acoustic Folk / Warm, Calm</p>
                                 </div>
                             </div>
-                            <i data-lucide="play" class="w-4 h-4 text-slate-600 group-hover:text-indigo-400 transition-colors"></i>
+                            <i data-lucide="play" class="w-4 h-4 text-slate-400 dark:text-slate-600 group-hover:text-indigo-500 transition-colors"></i>
                         </div>
-
                     </div>
                 </div>
 
-                <!-- 2. KNITTING (COZY) UNIVERSE CONTAINER (Hidden by default) -->
+                <!-- 2. KNITTING (COZY) UNIVERSE CONTAINER (Hidden by Default) -->
                 <div id="content-knitting" class="tab-content w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center hidden opacity-0 translate-y-4">
                     <div class="lg:col-span-5 space-y-6">
-                        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs font-semibold">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-100 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20 text-xs font-semibold">
                             ACTIVE: WEAVING THREADS
                         </div>
-                        <h3 class="text-3xl font-bold font-montserrat tracking-tight text-white">한 코 한 코 단단하게 쌓아올린 마스터피스</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed">
+                        <h3 class="text-3xl font-bold font-montserrat tracking-tight text-slate-900 dark:text-white">한 코 한 코 단단하게 쌓아올린 마스터피스</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
                             뜨개질은 조용한 투쟁입니다. 설계 도면을 꼼꼼히 확인하고 한땀한땀 시간을 누적하지 않으면 구멍이 숭숭 뚫립니다. 사소한 실수를 용납하지 않고 목적지까지 한 코씩 축적하는 끈기는 곧 업무적 완성도를 견인하는 지표가 됩니다.
                         </p>
                         
                         <!-- Knitting Live Project Progress Bar -->
-                        <div class="p-5 rounded-2xl bg-[#1c1917]/50 border border-amber-800/20 space-y-3">
+                        <div class="p-5 rounded-2xl bg-amber-50/50 dark:bg-[#1c1917]/50 border border-amber-200 dark:border-amber-800/20 space-y-3 shadow-sm">
                             <div class="flex justify-between items-center">
-                                <span class="text-xs font-bold text-amber-400 tracking-wide uppercase">Current Project</span>
-                                <span class="text-xs font-mono text-slate-400">78% Complete</span>
+                                <span class="text-xs font-bold text-amber-700 dark:text-amber-400 tracking-wide uppercase">Current Project</span>
+                                <span class="text-xs font-mono text-slate-500 dark:text-slate-400">78% Complete</span>
                             </div>
-                            <h4 class="text-sm font-bold text-slate-200">Chunky Woolen Cardigan for Winter</h4>
-                            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-200">Chunky Woolen Cardigan for Winter</h4>
+                            <div class="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
                                 <div class="bg-amber-500 h-full rounded-full transition-all duration-1000" style="width: 78%;"></div>
                             </div>
-                            <p class="text-[11px] text-slate-500">소매 조립 작업 중 — 약 12시간 소요 예정</p>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-500">소매 조립 작업 중 — 약 12시간 소요 예정</p>
                         </div>
                     </div>
 
                     <!-- Knit Gallery Grid -->
                     <div class="lg:col-span-7 grid grid-cols-2 gap-4">
                         <div class="space-y-4">
-                            <!-- Knit item 1 -->
-                            <div class="p-3 bg-[#1e1a16] border border-amber-900/20 rounded-2xl group overflow-hidden">
-                                <img src="https://placehold.co/400x300/3e2723/ffffff?text=Knitted+Beanie" onerror="this.onerror=null; this.src='https://placehold.co/400x300/27272a/ffffff?text=Cozy+Work+1';" class="w-full h-36 object-cover rounded-xl mb-3 group-hover:scale-105 transition-all duration-300" alt="Chunky Beanie">
+                            <!-- Item 1 -->
+                            <div class="p-3 bg-amber-50/30 dark:bg-[#1e1a16] border border-amber-200 dark:border-amber-900/20 rounded-2xl group overflow-hidden shadow-sm">
+                                <img src="https://placehold.co/400x300/e9d8a6/0f172a?text=Knitted+Beanie" onerror="this.onerror=null; this.src='https://placehold.co/400x300/27272a/ffffff?text=Cozy+Work+1';" class="w-full h-36 object-cover rounded-xl mb-3 group-hover:scale-105 transition-all duration-300" alt="Chunky Beanie">
                                 <div class="px-1">
-                                    <h5 class="text-xs font-bold text-slate-200">청키 청록 비니</h5>
-                                    <span class="text-[10px] text-amber-500/80">3Ply 메리노울, 가터뜨기</span>
+                                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">청키 청록 비니</h5>
+                                    <span class="text-[10px] text-amber-700 dark:text-amber-500/80">3Ply 메리노울, 가터뜨기</span>
                                 </div>
                             </div>
-                            <!-- Knit item 2 -->
-                            <div class="p-3 bg-[#1e1a16] border border-amber-900/20 rounded-2xl group overflow-hidden">
-                                <img src="https://placehold.co/400x350/5d4037/ffffff?text=Mini+Coaster" onerror="this.onerror=null; this.src='https://placehold.co/400x350/27272a/ffffff?text=Cozy+Work+2';" class="w-full h-44 object-cover rounded-xl mb-3 group-hover:scale-105 transition-all duration-300" alt="Linen Coaster">
+                            <!-- Item 2 -->
+                            <div class="p-3 bg-amber-50/30 dark:bg-[#1e1a16] border border-amber-200 dark:border-amber-900/20 rounded-2xl group overflow-hidden shadow-sm">
+                                <img src="https://placehold.co/400x350/dda15e/ffffff?text=Mini+Coaster" onerror="this.onerror=null; this.src='https://placehold.co/400x350/27272a/ffffff?text=Cozy+Work+2';" class="w-full h-44 object-cover rounded-xl mb-3 group-hover:scale-105 transition-all duration-300" alt="Linen Coaster">
                                 <div class="px-1">
-                                    <h5 class="text-xs font-bold text-slate-200">기하학 무늬 코스터 세트</h5>
-                                    <span class="text-[10px] text-amber-500/80">린넨 가방실, 자카드 배색</span>
+                                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">기하학 무늬 코스터 세트</h5>
+                                    <span class="text-[10px] text-amber-700 dark:text-amber-500/80">린넨 가방실, 자카드 배색</span>
                                 </div>
                             </div>
                         </div>
 
                         <div class="space-y-4 pt-6">
-                            <!-- Knit item 3 -->
-                            <div class="p-3 bg-[#1e1a16] border border-amber-900/20 rounded-2xl group overflow-hidden">
-                                <img src="https://placehold.co/400x400/4e342e/ffffff?text=Winter+Scarf" onerror="this.onerror=null; this.src='https://placehold.co/400x400/27272a/ffffff?text=Cozy+Work+3';" class="w-full h-48 object-cover rounded-xl mb-3 group-hover:scale-105 transition-all duration-300" alt="Chunky Scarf">
+                            <!-- Item 3 -->
+                            <div class="p-3 bg-amber-50/30 dark:bg-[#1e1a16] border border-amber-200 dark:border-amber-900/20 rounded-2xl group overflow-hidden shadow-sm">
+                                <img src="https://placehold.co/400x400/bc6c25/ffffff?text=Winter+Scarf" onerror="this.onerror=null; this.src='https://placehold.co/400x400/27272a/ffffff?text=Cozy+Work+3';" class="w-full h-48 object-cover rounded-xl mb-3 group-hover:scale-105 transition-all duration-300" alt="Chunky Scarf">
                                 <div class="px-1">
-                                    <h5 class="text-xs font-bold text-slate-200">꽈배기 패턴 스카프</h5>
-                                    <span class="text-[10px] text-amber-500/80">캐시미어 혼방, 꽈배기 아란 무늬</span>
+                                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">꽈배기 패턴 스카프</h5>
+                                    <span class="text-[10px] text-amber-700 dark:text-amber-500/80">캐시미어 혼방, 꽈배기 아란 무늬</span>
                                 </div>
                             </div>
-                            <!-- Knit item 4 -->
-                            <div class="p-3 bg-[#1e1a16] border border-amber-900/20 rounded-2xl group overflow-hidden">
-                                <img src="https://placehold.co/400x250/3c2f2f/ffffff?text=Knitted+Pouch" onerror="this.onerror=null; this.src='https://placehold.co/400x250/27272a/ffffff?text=Cozy+Work+4';" class="w-full h-32 object-cover rounded-xl mb-3 group-hover:scale-105 transition-all duration-300" alt="Fabric Bag">
+                            <!-- Item 4 -->
+                            <div class="p-3 bg-amber-50/30 dark:bg-[#1e1a16] border border-amber-200 dark:border-amber-900/20 rounded-2xl group overflow-hidden shadow-sm">
+                                <img src="https://placehold.co/400x250/cdb4db/0f172a?text=Knitted+Pouch" onerror="this.onerror=null; this.src='https://placehold.co/400x250/27272a/ffffff?text=Cozy+Work+4';" class="w-full h-32 object-cover rounded-xl mb-3 group-hover:scale-105 transition-all duration-300" alt="Fabric Bag">
                                 <div class="px-1">
-                                    <h5 class="text-xs font-bold text-slate-200">데일리 파우치</h5>
-                                    <span class="text-[10px] text-amber-500/80">패브릭얀, 바구니 비치뜨기</span>
+                                    <h5 class="text-xs font-bold text-slate-800 dark:text-slate-200">데일리 파우치</h5>
+                                    <span class="text-[10px] text-amber-700 dark:text-amber-500/80">패브릭얀, 바구니 비치뜨기</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. GOLF (GREEN) UNIVERSE CONTAINER (Hidden by default) -->
+                <!-- 3. GOLF (GREEN) UNIVERSE CONTAINER (Hidden by Default) -->
                 <div id="content-golf" class="tab-content w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center hidden opacity-0 translate-y-4">
                     <div class="lg:col-span-5 space-y-6">
-                        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20 text-xs font-semibold">
                             ACTIVE: AIMING GREEN
                         </div>
-                        <h3 class="text-3xl font-bold font-montserrat tracking-tight text-white">필드 위 정교한 몰입과 타격</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed">
+                        <h3 class="text-3xl font-bold font-montserrat tracking-tight text-slate-900 dark:text-white">필드 위 정교한 몰입과 타격</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
                             골프는 좁쌀만 한 실수가 스코어를 붕괴시키는 정직한 스포츠입니다. 바람을 읽고, 나의 체력 한계와 임팩트를 계산하여 타겟팅합니다. 이 경험은 언제나 문제의 핵심을 짚어 내고 끝까지 추진하는 탁월한 전략적 마인드를 단련해 줍니다.
                         </p>
                         
                         <!-- Golf Best Score Card -->
-                        <div class="p-5 rounded-2xl bg-[#06241a]/55 border border-emerald-950/45 space-y-3">
+                        <div class="p-5 rounded-2xl bg-emerald-50/50 dark:bg-[#06241a]/55 border border-emerald-200 dark:border-emerald-950/45 space-y-3 shadow-sm">
                             <div class="flex justify-between items-center">
-                                <span class="text-xs font-bold text-emerald-400 tracking-wide uppercase">Best Score</span>
-                                <span class="text-xs font-mono text-emerald-300 font-bold">82 Strokes (Single)</span>
+                                <span class="text-xs font-bold text-emerald-700 dark:text-emerald-400 tracking-wide uppercase">Best Score</span>
+                                <span class="text-xs font-mono text-emerald-600 dark:text-emerald-300 font-bold">82 Strokes (Single)</span>
                             </div>
                             <div class="grid grid-cols-3 gap-2 text-center pt-2">
-                                <div class="p-2 rounded-xl bg-[#093526]/50">
-                                    <div class="text-[10px] text-slate-400">Driver</div>
-                                    <div class="text-sm font-bold text-white">220m</div>
+                                <div class="p-2 rounded-xl bg-emerald-100/50 dark:bg-[#093526]/50">
+                                    <div class="text-[10px] text-slate-500 dark:text-slate-400">Driver</div>
+                                    <div class="text-sm font-bold text-slate-800 dark:text-white">220m</div>
                                 </div>
-                                <div class="p-2 rounded-xl bg-[#093526]/50">
-                                    <div class="text-[10px] text-slate-400">Fairway</div>
-                                    <div class="text-sm font-bold text-white">72%</div>
+                                <div class="p-2 rounded-xl bg-emerald-100/50 dark:bg-[#093526]/50">
+                                    <div class="text-[10px] text-slate-500 dark:text-slate-400">Fairway</div>
+                                    <div class="text-sm font-bold text-slate-800 dark:text-white">72%</div>
                                 </div>
-                                <div class="p-2 rounded-xl bg-[#093526]/50">
-                                    <div class="text-[10px] text-slate-400">Putts</div>
-                                    <div class="text-sm font-bold text-white">1.9 avg</div>
+                                <div class="p-2 rounded-xl bg-emerald-100/50 dark:bg-[#093526]/50">
+                                    <div class="text-[10px] text-slate-500 dark:text-slate-400">Putts</div>
+                                    <div class="text-sm font-bold text-slate-800 dark:text-white">1.9 avg</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Golf Skill Bar Graph -->
-                    <div class="lg:col-span-7 space-y-6 bg-slate-900/40 p-6 sm:p-8 rounded-2xl border border-slate-800">
+                    <div class="lg:col-span-7 space-y-6 bg-slate-50 dark:bg-slate-900/40 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
                         <div class="text-xs text-slate-500 font-semibold uppercase tracking-wider mb-2">My Golf Mental & Physical Skills</div>
                         
                         <!-- Skill 1 -->
                         <div class="space-y-2">
                             <div class="flex justify-between text-xs font-semibold">
-                                <span class="text-slate-200 flex items-center gap-1.5"><i data-lucide="crosshair" class="w-3.5 h-3.5 text-emerald-400"></i>정밀한 에이밍 (Aiming Precision)</span>
-                                <span class="text-emerald-400">92%</span>
+                                <span class="text-slate-700 dark:text-slate-200 flex items-center gap-1.5"><i data-lucide="crosshair" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>정밀한 에이밍 (Aiming Precision)</span>
+                                <span class="text-emerald-600 dark:text-emerald-400 font-bold">92%</span>
                             </div>
-                            <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                            <div class="w-full bg-slate-200 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
                                 <div class="bg-gradient-to-r from-emerald-600 to-emerald-400 h-full rounded-full" style="width: 92%;"></div>
                             </div>
                         </div>
@@ -480,10 +486,10 @@
                         <!-- Skill 2 -->
                         <div class="space-y-2">
                             <div class="flex justify-between text-xs font-semibold">
-                                <span class="text-slate-200 flex items-center gap-1.5"><i data-lucide="activity" class="w-3.5 h-3.5 text-emerald-400"></i>스윙 템포 조율 (Tempo Control)</span>
-                                <span class="text-emerald-400">85%</span>
+                                <span class="text-slate-700 dark:text-slate-200 flex items-center gap-1.5"><i data-lucide="activity" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>스윙 템포 조율 (Tempo Control)</span>
+                                <span class="text-emerald-600 dark:text-emerald-400 font-bold">85%</span>
                             </div>
-                            <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                            <div class="w-full bg-slate-200 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
                                 <div class="bg-gradient-to-r from-emerald-600 to-emerald-400 h-full rounded-full" style="width: 85%;"></div>
                             </div>
                         </div>
@@ -491,10 +497,10 @@
                         <!-- Skill 3 -->
                         <div class="space-y-2">
                             <div class="flex justify-between text-xs font-semibold">
-                                <span class="text-slate-200 flex items-center gap-1.5"><i data-lucide="brain" class="w-3.5 h-3.5 text-emerald-400"></i>위기 관리 및 회복 탄력성 (Mental Recovery)</span>
-                                <span class="text-emerald-400">89%</span>
+                                <span class="text-slate-700 dark:text-slate-200 flex items-center gap-1.5"><i data-lucide="brain" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>위기 관리 및 회복 탄력성 (Mental Recovery)</span>
+                                <span class="text-emerald-600 dark:text-emerald-400 font-bold">89%</span>
                             </div>
-                            <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                            <div class="w-full bg-slate-200 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
                                 <div class="bg-gradient-to-r from-emerald-600 to-emerald-400 h-full rounded-full" style="width: 89%;"></div>
                             </div>
                         </div>
@@ -502,10 +508,10 @@
                         <!-- Skill 4 -->
                         <div class="space-y-2">
                             <div class="flex justify-between text-xs font-semibold">
-                                <span class="text-slate-200 flex items-center gap-1.5"><i data-lucide="compass" class="w-3.5 h-3.5 text-emerald-400"></i>바람과 지형 계산능력 (Environmental Read)</span>
-                                <span class="text-emerald-400">80%</span>
+                                <span class="text-slate-700 dark:text-slate-200 flex items-center gap-1.5"><i data-lucide="compass" class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"></i>바람과 지형 계산능력 (Environmental Read)</span>
+                                <span class="text-emerald-600 dark:text-emerald-400 font-bold">80%</span>
                             </div>
-                            <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                            <div class="w-full bg-slate-200 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
                                 <div class="bg-gradient-to-r from-emerald-600 to-emerald-400 h-full rounded-full" style="width: 80%;"></div>
                             </div>
                         </div>
@@ -516,17 +522,17 @@
         </div>
     </section>
 
-    <!-- Outro & Networking (Call To Action / Contact) Section -->
-    <section id="outro" class="py-32 relative overflow-hidden bg-[#0b0f19]">
+    <!-- Outro & Networking Section -->
+    <section id="outro" class="py-32 relative overflow-hidden bg-paperBeige dark:bg-[#0b0f19]">
         <!-- Gradient Lights background -->
-        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-indigo-950/20 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] bg-indigo-200/20 dark:bg-indigo-950/20 rounded-full blur-[100px] pointer-events-none"></div>
         
         <div class="max-w-4xl mx-auto px-6 text-center relative z-10 space-y-8">
-            <span class="text-sm font-semibold tracking-widest uppercase text-indigo-400">EPILOGUE</span>
-            <h2 class="text-4xl sm:text-5xl font-bold font-montserrat tracking-tight leading-tight">
+            <span class="text-sm font-semibold tracking-widest uppercase text-indigo-600 dark:text-indigo-400">EPILOGUE</span>
+            <h2 class="text-4xl sm:text-5xl font-bold font-montserrat tracking-tight leading-tight text-slate-900 dark:text-white">
                 나의 세계를 방문해 주셔서 감사합니다.
             </h2>
-            <p class="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+            <p class="text-slate-600 dark:text-slate-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
                 각기 다른 주파수를 가졌지만 결국 하나로 수렴하는 저의 입체적인 스펙트럼이 흥미로우셨기를 바랍니다.<br>
                 언제나 감각적이고 디테일한 교류를 원하신다면 아래 채널을 통해 편하게 문을 두드려 주세요.
             </p>
@@ -541,36 +547,36 @@
                 </button>
                 
                 <!-- Social link 1 -->
-                <a href="https://github.com" target="_blank" class="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white transition-all">
+                <a href="https://github.com" target="_blank" class="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all shadow-sm">
                     <i data-lucide="github" class="w-4 h-4"></i>
                     <span>GitHub</span>
                 </a>
 
                 <!-- Social link 2 -->
-                <a href="https://linkedin.com" target="_blank" class="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white transition-all">
+                <a href="https://linkedin.com" target="_blank" class="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white dark:bg-slate-800/80 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all shadow-sm">
                     <i data-lucide="linkedin" class="w-4 h-4"></i>
                     <span>LinkedIn</span>
                 </a>
             </div>
 
             <!-- Copy Success Toast Alert -->
-            <div id="toast-message" class="fixed bottom-8 left-1/2 -translate-x-1/2 px-5 py-3 rounded-xl bg-slate-800 border border-indigo-500 text-slate-100 text-xs font-semibold shadow-2xl transition-all opacity-0 pointer-events-none transform translate-y-2 z-50 flex items-center gap-2">
-                <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
+            <div id="toast-message" class="fixed bottom-8 left-1/2 -translate-x-1/2 px-5 py-3 rounded-xl bg-white dark:bg-slate-800 border border-indigo-500 text-slate-800 dark:text-slate-100 text-xs font-semibold shadow-2xl transition-all opacity-0 pointer-events-none transform translate-y-2 z-50 flex items-center gap-2">
+                <i data-lucide="check" class="w-4 h-4 text-emerald-500"></i>
                 <span>이메일 주소(you@yourdomain.com)가 클립보드에 복사되었습니다!</span>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-900 bg-[#090d16] py-12 text-slate-500 text-xs">
+    <footer class="border-t border-slate-200 dark:border-slate-900 bg-[#f5f2eb] dark:bg-[#090d16] py-12 text-slate-500 text-xs">
         <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-6">
             <div class="flex items-center gap-2">
-                <span class="font-montserrat font-black tracking-wider text-slate-300">I AM.</span>
+                <span class="font-montserrat font-black tracking-wider text-slate-800 dark:text-slate-300">I AM.</span>
                 <span>© 2026. All Rights Reserved.</span>
             </div>
             <div class="flex gap-6">
-                <a href="#hero" class="hover:text-slate-300 transition-colors">Back to top</a>
-                <a href="#" class="hover:text-slate-300 transition-colors">Privacy Policy</a>
+                <a href="#hero" class="hover:text-slate-950 dark:hover:text-slate-300 transition-colors">Back to top</a>
+                <a href="#" class="hover:text-slate-950 dark:hover:text-slate-300 transition-colors">Privacy Policy</a>
             </div>
         </div>
     </footer>
@@ -584,34 +590,79 @@
         const universeConfigs = {
             music: {
                 accentClass: 'bg-indigo-600',
-                colorCode: 'rgba(99, 102, 241, 0.25)',
+                colorCode: {
+                    dark: 'rgba(99, 102, 241, 0.25)',
+                    light: 'rgba(99, 102, 241, 0.12)'
+                },
                 glowHex: '#6366f1'
             },
             knitting: {
                 accentClass: 'bg-amber-600',
-                colorCode: 'rgba(245, 158, 11, 0.25)',
+                colorCode: {
+                    dark: 'rgba(245, 158, 11, 0.25)',
+                    light: 'rgba(245, 158, 11, 0.12)'
+                },
                 glowHex: '#f59e0b'
             },
             golf: {
                 accentClass: 'bg-emerald-600',
-                colorCode: 'rgba(16, 185, 129, 0.25)',
+                colorCode: {
+                    dark: 'rgba(16, 185, 129, 0.25)',
+                    light: 'rgba(16, 185, 129, 0.12)'
+                },
                 glowHex: '#10b981'
             }
         };
 
+        let currentActiveUniverse = 'music';
+
+        // Dark / Light Theme System Switcher
+        function toggleTheme() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-toggle-icon');
+            
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                themeIcon.setAttribute('data-lucide', 'moon');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.setAttribute('data-lucide', 'sun');
+            }
+            
+            lucide.createIcons();
+            // Refresh colors on active universe content to align with current theme
+            applyUniverseStyles(currentActiveUniverse);
+        }
+
+        // Apply dynamically loaded colors to switcher card
+        function applyUniverseStyles(universeKey) {
+            const isDark = document.documentElement.classList.contains('dark');
+            const conf = universeConfigs[universeKey];
+            const ambient = document.getElementById('ambient-sphere');
+            const canvas = document.getElementById('universe-canvas');
+
+            // Apply glows and border highlights depending on Active Themes
+            ambient.style.backgroundColor = isDark ? conf.colorCode.dark : conf.colorCode.light;
+            canvas.style.borderColor = isDark ? `${conf.glowHex}25` : `${conf.glowHex}40`;
+        }
+
         // Switch Universe Tabs Engine
         function switchUniverse(targetUniverse) {
-            // 1. Switch Active Buttons
+            currentActiveUniverse = targetUniverse;
+
+            // 1. Switch Active Buttons classes dynamically
             const buttons = document.querySelectorAll('.universe-tab-btn');
             buttons.forEach(btn => {
-                btn.className = "universe-tab-btn flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-bold tracking-wide transition-all duration-300 text-slate-400 hover:text-white";
+                btn.className = "universe-tab-btn flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-bold tracking-wide transition-all duration-300 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white";
             });
 
             const activeBtn = document.getElementById(`btn-${targetUniverse}`);
             const conf = universeConfigs[targetUniverse];
             activeBtn.className = `universe-tab-btn flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-bold tracking-wide transition-all duration-300 ${conf.accentClass} text-white shadow-lg`;
 
-            // 2. Crossfade Active Content
+            // 2. Crossfade Active Content cards smoothly
             const contentDivs = document.querySelectorAll('.tab-content');
             contentDivs.forEach(div => {
                 div.classList.add('opacity-0', 'translate-y-4');
@@ -628,13 +679,8 @@
                 targetContent.classList.remove('opacity-0', 'translate-y-4');
             }, 450);
 
-            // 3. Transform Background Glow Orb
-            const ambient = document.getElementById('ambient-sphere');
-            ambient.style.backgroundColor = conf.colorCode;
-            
-            // Adjust the dynamic canvas border hover intensity
-            const canvas = document.getElementById('universe-canvas');
-            canvas.style.borderColor = `${conf.glowHex}20`;
+            // 3. Render appropriate light effects
+            applyUniverseStyles(targetUniverse);
         }
 
         // Faux Playlist Engine
@@ -646,7 +692,7 @@
             const timeSpan = document.querySelector('#content-music span.font-mono');
             if (timeSpan) timeSpan.innerText = timeText;
 
-            // Trigger visual play state
+            // Trigger visual play state on Vinyl disc
             const container = document.querySelector('.active-disc-container');
             container.classList.remove('music-paused');
             container.classList.add('music-active');
@@ -670,16 +716,16 @@
             lucide.createIcons();
         }
 
-        // Clipboard Fallback Engine
+        // Clipboard Copy Action Engine
         function copyMailToClipboard() {
             const fakeInput = document.createElement('textarea');
-            fakeInput.value = 'hello@iam-universe.com'; // Replace with real email if needed
+            fakeInput.value = 'hello@iam-universe.com'; 
             document.body.appendChild(fakeInput);
             fakeInput.select();
             document.execCommand('copy');
             document.body.removeChild(fakeInput);
 
-            // Trigger Success Toast
+            // Trigger Success Toast Notice
             const toast = document.getElementById('toast-message');
             toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
             toast.classList.add('opacity-100', 'translate-y-0');
@@ -690,19 +736,37 @@
             }, 3000);
         }
 
-        // Window Scroll listener to fade header slightly
+        // Window Scroll listener to fade and thin out header slightly on movement
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             if (window.scrollY > 50) {
-                header.classList.add('py-1', 'bg-[#0b0f19]/95');
+                header.classList.add('py-1', 'bg-paperBeige/95', 'dark:bg-[#0b0f19]/95');
                 header.classList.remove('h-20');
                 header.classList.add('h-16');
             } else {
-                header.classList.remove('py-1', 'bg-[#0b0f19]/95');
+                header.classList.remove('py-1', 'bg-paperBeige/95', 'dark:bg-[#0b0f19]/95');
                 header.classList.remove('h-16');
                 header.classList.add('h-20');
             }
         });
+
+        // Initialize Theme preference on browser load
+        window.onload = function () {
+            const savedTheme = localStorage.getItem('theme') || 'dark'; // Dark mode as premium default
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-toggle-icon');
+            
+            if (savedTheme === 'dark') {
+                html.classList.add('dark');
+                themeIcon.setAttribute('data-lucide', 'sun');
+            } else {
+                html.classList.remove('dark');
+                themeIcon.setAttribute('data-lucide', 'moon');
+            }
+            
+            lucide.createIcons();
+            applyUniverseStyles(currentActiveUniverse);
+        }
     </script>
 </body>
 </html>
